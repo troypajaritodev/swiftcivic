@@ -53,6 +53,21 @@ function logAction($user_id, $action, $details = '', $request_id = null) {
     $stmt->execute([$user_id, $request_id, $action, $details, $ip]);
 }
 
+function registerUser($email, $password, $full_name) {
+    global $pdo;
+    
+    // Check if email exists
+    $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+    if ($stmt->fetch()) {
+        return false; // Email already exists
+    }
+    
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    $stmt = $pdo->prepare("INSERT INTO users (email, password, full_name, role) VALUES (?, ?, ?, 'citizen')");
+    return $stmt->execute([$email, $hashedPassword, $full_name]);
+}
+
 function generateTrackingCode() {
     return 'TRK' . strtoupper(bin2hex(random_bytes(4))) . time();
 }

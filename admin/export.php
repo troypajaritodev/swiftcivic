@@ -16,7 +16,7 @@ if ($status_filter) {
 $whereClause = "WHERE " . implode(" AND ", $where);
 
 $stmt = $pdo->prepare("
-    SELECT r.id, r.tracking_number, u.full_name, u.email, u.contact,
+    SELECT r.id, r.tracking_number, u.full_name, u.email, u.contact, 
            r.doc_type, r.status, r.delivery_address, r.created_at, 
            p.payment_method, p.amount
     FROM requests r
