@@ -26,14 +26,14 @@ function isStaff() {
 function redirectIfNotLoggedIn() {
     if (!isLoggedIn()) {
         header('Location: login.php');
-        exit;
+        exit();
     }
 }
 
 function redirectIfNotStaff() {
     if (!isStaff()) {
         header('Location: index.php');
-        exit;
+        exit();
     }
 }
 
@@ -56,7 +56,6 @@ function logAction($user_id, $action, $details = '', $request_id = null) {
 function registerUser($email, $password, $full_name) {
     global $pdo;
     
-    // Check if email exists
     $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
     $stmt->execute([$email]);
     if ($stmt->fetch()) {
