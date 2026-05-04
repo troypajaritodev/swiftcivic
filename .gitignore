@@ -16,3 +16,5 @@ Thumbs.db
 
 # Deployment folder
 deploy/
+
+db.infinityfree.php
