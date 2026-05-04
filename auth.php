@@ -46,10 +46,11 @@ function getCurrentUser() {
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function logAction($user_id, $action, $details = '') {
+function logAction($user_id, $action, $details = '', $request_id = null) {
     global $pdo;
-    $stmt = $pdo->prepare("INSERT INTO logs (user_id, action, details, created_at) VALUES (?, ?, ?, NOW())");
-    $stmt->execute([$user_id, $action, $details]);
+    $ip = $_SERVER['REMOTE_ADDR'] ?? null;
+    $stmt = $pdo->prepare("INSERT INTO logs (user_id, request_id, action, details, ip_address, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
+    $stmt->execute([$user_id, $request_id, $action, $details, $ip]);
 }
 
 function generateTrackingCode() {

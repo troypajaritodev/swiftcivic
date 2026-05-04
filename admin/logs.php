@@ -112,12 +112,12 @@ require_once __DIR__ . '/header.php';
                         <td class="px-4 py-3 text-sm"><?= htmlspecialchars($log['action']) ?></td>
                         <td class="px-4 py-3 text-sm">
                             <?php if ($log['tracking_number']): ?>
-                                <a href="verify.php" class="text-skyblue hover:underline"><?= htmlspecialchars($log['tracking_number']) ?></a>
+                                <a href="verify.php?id=<?= $log['request_id'] ?>" class="text-skyblue hover:underline"><?= htmlspecialchars($log['tracking_number']) ?></a>
                             <?php else: ?>
                                 <span class="text-gray-400">-</span>
                             <?php endif; ?>
                         </td>
-                        <td class="px-4 py-3 text-sm text-gray-500"><?= htmlspecialchars($log['ip_address']) ?></td>
+                        <td class="px-4 py-3 text-sm text-gray-500"><?= htmlspecialchars($log['ip_address'] ?? 'N/A') ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

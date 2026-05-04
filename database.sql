@@ -1,6 +1,6 @@
--- SwiftCivic Database SQL
+-- SwiftCivic Database SQL (Updated with missing columns)
 -- Import this file to InfinityFree phpMyAdmin
--- Database: if0_41810514_swiftcivic
+-- Database: if0_41829562_swift
 -- Host: sql309.infinityfree.com
 
 DROP TABLE IF EXISTS logs;
@@ -55,13 +55,16 @@ CREATE TABLE payments (
 CREATE TABLE logs (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
+    request_id INT NULL,
     action VARCHAR(255) NOT NULL,
     details TEXT,
+    ip_address VARCHAR(45) NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
+    FOREIGN KEY (request_id) REFERENCES requests(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Insert Admin User (password: EvilfNrfQ0W)
--- Replace HASH below with output from generate_hash.php
+-- Generate hash with: echo password_hash('EvilfNrfQ0W', PASSWORD_DEFAULT);
 INSERT INTO users (full_name, email, password, role) VALUES 
-('Admin', 'admin@swiftcivic.com', '$2y$10$8tDzR7bqJmGpNX1KzVbqKOQx5vQxQxQxQxQxQxQxQxQxQxQxQ', 'admin');
+('Admin', 'admin@swiftcivic.com', '$2y$10$8tDzR7bqJmGpNX1KzVbqKOQx5vQxQxQxQxQxQxQxQxQxQ', 'admin');

@@ -17,8 +17,8 @@ $whereClause = "WHERE " . implode(" AND ", $where);
 
 $stmt = $pdo->prepare("
     SELECT r.id, r.tracking_number, u.full_name, u.email, u.contact,
-           r.doc_type, r.status, r.purpose, r.delivery_address,
-           r.created_at, p.payment_method, p.amount
+           r.doc_type, r.status, r.delivery_address, r.created_at, 
+           p.payment_method, p.amount
     FROM requests r
     JOIN users u ON r.user_id = u.id
     LEFT JOIN payments p ON r.id = p.request_id
@@ -31,15 +31,15 @@ $results = $stmt->fetchAll();
 if (isset($_GET['download']) && $_GET['download'] === 'csv') {
     header('Content-Type: text/csv; charset=utf-8');
     header('Content-Disposition: attachment; filename="swiftcivic_report_' . $month . '.csv"');
-
+    
     $output = fopen('php://output', 'w');
-
+    
     fputcsv($output, [
         'ID', 'Tracking #', 'Citizen Name', 'Email', 'Contact',
-        'Document Type', 'Status', 'Purpose', 'Delivery Address',
+        'Document Type', 'Status', 'Delivery Address',
         'Date Applied', 'Payment Method', 'Amount'
     ]);
-
+    
     foreach ($results as $row) {
         fputcsv($output, [
             $row['id'],
@@ -49,14 +49,13 @@ if (isset($_GET['download']) && $_GET['download'] === 'csv') {
             $row['contact'],
             $row['doc_type'],
             $row['status'],
-            $row['purpose'],
             $row['delivery_address'],
             $row['created_at'],
             $row['payment_method'],
             $row['amount']
         ]);
     }
-
+    
     fclose($output);
     exit();
 }
