@@ -1,0 +1,18 @@
+# Sensitive files
+db.php
+uploads/
+*.log
+*.env
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Deployment folder
+deploy/

@@ -1,0 +1,16 @@
+# Disable directory listing for security
+Options -Indexes
+
+# Restrict access to admin folder (optional: uncomment to allow only specific IPs)
+# Require ip 192.168.1.1
+
+# Protect admin files from direct access by non-admins
+# (PHP authentication still handles this, but this adds an extra layer)
+
+# Prevent access to sensitive files
+<FilesMatch "\.(sql|log|md|txt)$">
+    Require all denied
+</FilesMatch>
+
+# Ensure PHP files are processed correctly
+AddHandler application/x-httpd-php .php
