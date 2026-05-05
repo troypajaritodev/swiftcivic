@@ -10,7 +10,8 @@ $success = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $request_id = (int)$_POST['request_id'];
     $action = $_POST['action'] ?? '';
-    $admin_notes = filter_input(INPUT_POST, 'admin_notes', FILTER_DEFAULT);
+    $admin_notes = $_POST['admin_notes'] ?? '';
+    $admin_notes = filter_var($admin_notes, FILTER_DEFAULT);
 
     $stmt = $pdo->prepare("SELECT * FROM requests WHERE id = ?");
     $stmt->execute([$request_id]);

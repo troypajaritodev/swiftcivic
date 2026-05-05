@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: swiftcivic
+    runtime: php
+    plan: free
+    buildCommand: "echo 'PHP app ready'"
+    startCommand: "php -S 0.0.0.0:$PORT"
+    healthCheckPath: /
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+
+  - type: pserv
+    name: swiftcivic-db
+    plan: free
+    databaseName: swiftcivic
+    user: swiftcivic_user

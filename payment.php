@@ -27,7 +27,8 @@ $error = '';
 $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $payment_method = filter_input(INPUT_POST, 'payment_method', FILTER_DEFAULT);
+    $payment_method = $_POST['payment_method'] ?? '';
+    $payment_method = filter_var($payment_method, FILTER_DEFAULT);
     $amount = 150.00; // Default amount
 
     if (!isset($_FILES['receipt']) || $_FILES['receipt']['error'] !== UPLOAD_ERR_OK) {

@@ -1,5 +1,16 @@
 <?php
 require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/auth.php';
+
+if (isLoggedIn()) {
+    if (isStaff()) {
+        header('Location: admin/index.php');
+    } else {
+        header('Location: citizen_dashboard.php');
+    }
+    exit();
+}
+
 $pageTitle = 'Track Request';
 require_once 'header.php';
 
@@ -8,7 +19,8 @@ $request = null;
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $tracking_number = filter_input(INPUT_POST, 'tracking_number', FILTER_DEFAULT);
+    $tracking_number = $_POST['tracking_number'] ?? '';
+    $tracking_number = filter_var($tracking_number, FILTER_DEFAULT);
     
     if (empty($tracking_number)) {
         $error = 'Please enter a tracking number.';

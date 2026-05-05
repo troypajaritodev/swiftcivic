@@ -1,5 +1,16 @@
 <?php
 require_once 'auth.php';
+require_once 'db.php';
+
+if (isLoggedIn()) {
+    if (isStaff()) {
+        header('Location: admin/index.php');
+    } else {
+        header('Location: citizen_dashboard.php');
+    }
+    exit();
+}
+
 redirectIfNotLoggedIn();
 
 $user = getCurrentUser();
@@ -7,9 +18,12 @@ $success = '';
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $full_name = filter_input(INPUT_POST, 'full_name', FILTER_DEFAULT);
-    $contact = filter_input(INPUT_POST, 'contact', FILTER_DEFAULT);
-    $address = filter_input(INPUT_POST, 'address', FILTER_DEFAULT);
+    $full_name = $_POST['full_name'] ?? '';
+    $full_name = filter_var($full_name, FILTER_DEFAULT);
+    $contact = $_POST['contact'] ?? '';
+    $contact = filter_var($contact, FILTER_DEFAULT);
+    $address = $_POST['address'] ?? '';
+    $address = filter_var($address, FILTER_DEFAULT);
 
     if (empty($full_name)) {
         $error = 'Full name is required.';

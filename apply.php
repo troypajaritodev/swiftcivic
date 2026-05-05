@@ -1,5 +1,16 @@
 <?php
 require_once 'auth.php';
+require_once 'db.php';
+
+if (isLoggedIn()) {
+    if (isStaff()) {
+        header('Location: admin/index.php');
+    } else {
+        header('Location: citizen_dashboard.php');
+    }
+    exit();
+}
+
 redirectIfNotLoggedIn();
 
 $user = getCurrentUser();
@@ -19,9 +30,12 @@ if ($step === 3 && (!isset($_SESSION['apply_doc_type']))) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($step === 1) {
-        $doc_type = filter_input(INPUT_POST, 'doc_type', FILTER_DEFAULT);
-        $purpose = filter_input(INPUT_POST, 'purpose', FILTER_DEFAULT);
-        $delivery_address = filter_input(INPUT_POST, 'delivery_address', FILTER_DEFAULT);
+        $doc_type = $_POST['doc_type'] ?? '';
+        $doc_type = filter_var($doc_type, FILTER_DEFAULT);
+        $purpose = $_POST['purpose'] ?? '';
+        $purpose = filter_var($purpose, FILTER_DEFAULT);
+        $delivery_address = $_POST['delivery_address'] ?? '';
+        $delivery_address = filter_var($delivery_address, FILTER_DEFAULT);
 
         if (empty($doc_type)) {
             $error = 'Please select a document type.';

@@ -14,10 +14,12 @@ $error = '';
 $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $email = $_POST['email'] ?? '';
+    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
     $password = $_POST['password'] ?? '';
     $confirm_password = $_POST['confirm_password'] ?? '';
-    $full_name = filter_input(INPUT_POST, 'full_name', FILTER_DEFAULT);
+    $full_name = $_POST['full_name'] ?? '';
+    $full_name = filter_var($full_name, FILTER_DEFAULT);
 
     if (empty($email) || empty($password) || empty($full_name)) {
         $error = 'Please fill in all required fields.';
