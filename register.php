@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         if (registerUser($email, $password, $full_name)) {
             $user_id = $pdo->lastInsertId();
-            logAction($user_id, 'User registered');
+            logAction($user_id, 'User registered', '', null);
             header('Location: register_success.php');
             exit();
         } else {

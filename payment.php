@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmt->execute([$newStatus, $request_id]);
 
                     // Log action
-                    logAction('Payment uploaded', $request_id);
+                    logAction($_SESSION['user_id'], 'Payment uploaded', '', $request_id);
 
                     $pdo->commit();
 
