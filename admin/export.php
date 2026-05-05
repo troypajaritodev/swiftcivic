@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../auth.php';
+require_once __DIR__ . '/../db.php';
 redirectIfNotStaff();
 
 $month = $_GET['month'] ?? date('Y-m');

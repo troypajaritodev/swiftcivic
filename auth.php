@@ -1,5 +1,5 @@
 <?php
-require_once 'db.php';
+require_once __DIR__ . '/db.php';
 
 // Helper function to get correct file path for both localhost and InfinityFree
 function getFullPath($relativePath) {
@@ -32,7 +32,7 @@ function redirectIfNotLoggedIn() {
 
 function redirectIfNotStaff() {
     if (!isStaff()) {
-        header('Location: index.php');
+        header('Location: ../login.php');
         exit();
     }
 }
