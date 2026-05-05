@@ -3,7 +3,8 @@ require_once 'auth.php';
 require_once 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $email = $_POST['email'] ?? '';
+    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
     $password = $_POST['password'] ?? '';
     
     if (empty($email) || empty($password)) {
