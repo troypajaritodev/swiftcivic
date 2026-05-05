@@ -1,4 +1,12 @@
 <?php
+require_once 'auth.php';
+require_once 'db.php';
+
+if (isStaff()) {
+    header('Location: admin/index.php');
+    exit();
+}
+
 $pageTitle = 'Home';
 require_once 'header.php';
 ?>
