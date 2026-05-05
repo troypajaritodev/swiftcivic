@@ -49,7 +49,8 @@ function getCurrentUser() {
 function logAction($user_id, $action, $details = '', $request_id = null) {
     global $pdo;
     $ip = $_SERVER['REMOTE_ADDR'] ?? null;
-    $stmt = $pdo->prepare("INSERT INTO logs (user_id, request_id, action, details, ip_address, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
+    $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? null;
+    $stmt = $pdo->prepare("INSERT INTO logs (user_id, request_id, action, user_agent, ip_address, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
     $stmt->execute([$user_id, $request_id, $action, $details, $ip]);
 }
 
