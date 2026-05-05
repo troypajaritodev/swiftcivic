@@ -2,6 +2,15 @@
 require_once 'auth.php';
 require_once 'db.php';
 
+if (isLoggedIn()) {
+    if (isStaff()) {
+        header('Location: admin/index.php');
+    } else {
+        header('Location: citizen_dashboard.php');
+    }
+    exit();
+}
+
 $pageTitle = 'Registration Successful';
 require_once 'header.php';
 ?>
