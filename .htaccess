@@ -1,29 +1,10 @@
-# Disable directory listing for security
+# Disable directory listing
 Options -Indexes
 
 # Set default index file
 DirectoryIndex index.php index.html
 
-# Set default charset to UTF-8
-AddDefaultCharset UTF-8
-
-# Enable URL rewriting (required for potential future features)
+# Force HTTPS
 RewriteEngine On
-
-# Cache static assets (images, JS) for 30 days
-<FilesMatch "\.(svg|png|jpeg|jpg|js|css)$">
-    ExpiresActive On
-    ExpiresDefault "access plus 30 days"
-</FilesMatch>
-
-# Protect .htaccess file from direct access
-<Files .htaccess>
-    Require all denied
-</Files>
-
-# Prevent site from being loaded in iframes (clickjacking protection)
-Header set X-Frame-Options "SAMEORIGIN"
-Header set Content-Security-Policy "frame-ancestors 'self'"
-
-# Ensure PHP files are processed correctly
-AddHandler application/x-httpd-php .php
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
